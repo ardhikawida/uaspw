@@ -29,3 +29,7 @@ Route::get('konfirmasi-check-out', [App\Http\Controllers\PesanController::class,
 
 Route::get('profile', [App\Http\Controllers\ProfileController::class, 'index']);
 Route::put('profile', [App\Http\Controllers\ProfileController::class, 'update']);
+
+Route::get('history', [App\Http\Controllers\HistoryController::class, 'index']);
+Route::get('history/{id}', [App\Http\Controllers\HistoryController::class, 'detail']);
+

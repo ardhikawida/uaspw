@@ -4,20 +4,29 @@
    <div class="container">
        <div class="row">
            <div class="col-md-12">
-               <a href="{{ url('home') }}" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
+               <a href="{{ url('history') }}" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
            </div>
-           <div class="col-md-12 mt-4">
+           <div class="col-md-12 mt-2">
                <nav aria-label="breadcrumb">
                    <ol class="breadcrumb">
                      <li class="breadcrumb-item"><a href="{{ url('home') }}">Home</a></li>
-                     <li class="breadcrumb-item active" aria-current="page">Check Out</li>
+                     <li class="breadcrumb-item"><a href="{{ url('history') }}">Riwayat Pemesanan</a></li>
+                     <li class="breadcrumb-item active" aria-current="page">Detail Pemesanan</li>
                    </ol>
                </nav>
            </div>
            <div class="col-md-12">
                <div class="card">
+                    <div class="card-body">
+                        <h3>Berhasil Check Out!! </h3>
+                        <h5>Pesanan Anda Sudah Berhasil Dicheck out, untuk pembayaran silahkan transfer di rekening <strong>Bank Mandiri Nomor Rekening : 111111-222222-333 dengan nominal :</strong>
+                            <strong>Rp. {{ number_format($pesanan->kode+$pesanan->jumlah_harga) }}</strong>
+                        </h5>
+                    </div>
+               </div>
+               <div class="card">
                    <div class="card-body">
-                    <h3><i class="fa fa-shopping-cart"> Check Out</i></h3>
+                    <h3><i class="fa fa-shopping-cart"> Detail Pemesanan</i></h3>
                     @if(!empty($pesanan))
                        <p align="right">Tanggal Pesan : {{ $pesanan->tanggal }}</p>
                        <table class="table table-striped">
@@ -29,7 +38,6 @@
                                     <th>Jumlah</th>
                                     <th>Harga</th>
                                     <th>Total Harga</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,32 +50,30 @@
                                     </td>
                                     <td>{{ $pesanan_detail->barang->nama_barang }}</td>
                                     <td>{{ $pesanan_detail->jumlah }} Pcs</td>
-                                    <td align="left">Rp. {{ number_format($pesanan_detail->barang->harga) }}</td>
-                                    <td align="left">Rp. {{ number_format($pesanan_detail->jumlah_harga) }}</td>
-                                    <td>
-                                        <form action="{{ url('check-out') }}/{{ $pesanan_detail->id }}" method="POST">
-                                            @csrf
-                                            {{ method_field('DELETE') }}
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda Yakin Untuk Menghapus Data?')"><i class="fa fa-trash"></i></button>
-                                        </form>
-                                    </td>
+                                    <td align="right">Rp. {{ number_format($pesanan_detail->barang->harga) }}</td>
+                                    <td align="right">Rp. {{ number_format($pesanan_detail->jumlah_harga) }}</td>
+
                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="5" align="right"><strong>Total Harga : </strong></td>
-                                    <td><strong>{{ number_format($pesanan->jumlah_harga) }}</strong></td>
-                                    <td>
-                                        <a href="{{ url('konfirmasi-check-out') }}" class="btn btn-success btn-sm">
-                                            <i class="fa fa-shopping-cart"></i> Check Out
-                                        </a>
-                                    </td>
+                                    <td align="right"><strong>{{ number_format($pesanan->jumlah_harga) }}</strong></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="5" align="right"><strong>Kode Barang : </strong></td>
+                                    <td align="right"><strong>{{ number_format($pesanan->kode) }}</strong></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="5" align="right"><strong>Total yang harus ditransfer : </strong></td>
+                                    <td align="right"><strong>{{ number_format($pesanan->jumlah_harga+$pesanan->kode) }}</strong></td>
                                 </tr>
                             </tbody>
                        </table>
                     @endif
                    </div>
                </div>
-
            </div>
        </div>
     </div>

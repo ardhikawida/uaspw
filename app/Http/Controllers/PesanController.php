@@ -47,6 +47,7 @@ class PesanController extends Controller
             $pesanan->tanggal = $tanggal;
             $pesanan->status = 0;
             $pesanan->jumlah_harga = 0;
+            $pesanan->kode = mt_rand(100, 999);
             $pesanan->save();
        }
 
@@ -112,16 +113,16 @@ class PesanController extends Controller
     public function konfirmasi()
     {
         $user = User::where('id', Auth::user()->id)->first();
-        if(empty($user->alamat))
-        {
-            Alert::error('Hapus', 'Mohon Lengkapi Identitas Anda ...');
-            return redirect('profile');
-        }
-        if(empty($user->nohp))
-        {
-            Alert::error('Hapus', 'Mohon Lengkapi Identitas Anda ...');
-            return redirect('profile');
-        }
+        // if(empty($user->alamat))
+        // {
+        //     Alert::error('Hapus', 'Mohon Lengkapi Identitas Anda ...');
+        //     return redirect('profile');
+        // }
+        // if(empty($user->nohp))
+        // {
+        //     Alert::error('Hapus', 'Mohon Lengkapi Identitas Anda ...');
+        //     return redirect('profile');
+        // }
         $pesanan = Pesanan::where('user_id', Auth::user()->id)->where('status',0)->first();
         $pesanan_id = $pesanan->id;
         $pesanan->status = 1;
@@ -134,7 +135,7 @@ class PesanController extends Controller
             $barang->update();
         }
 
-        Alert::success('Sukses', 'Pesanan Berhasil Check Out');
-        return redirect('check-out');
+        Alert::success('Sukses', 'Pesanan Berhasil Check Out, Silahkan Lanjut ke Proses Pembayaran');
+        return redirect('history/'.$pesanan_id);
     }
 }

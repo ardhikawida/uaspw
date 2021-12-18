@@ -95,7 +95,7 @@
                             <label for="alamat" class="col-md-2 col-form-label text-md-right">Alamat</label>
 
                             <div class="col-md-6">
-                                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" name="alamat" value="{{ $user->alamat }}" required autocomplete="alamat" autofocus required=""></textarea>
+                                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" name="alamat" value="{{ $user->alamat }}" required autocomplete="alamat" autofocus></textarea>
 
                                 @error('alamat')
                                     <span class="invalid-feedback" role="alert">
